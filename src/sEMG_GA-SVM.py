@@ -16,7 +16,7 @@ from pymoo.operators.sampling.rnd import FloatRandomSampling
 from pymoo.util.display.multi import MultiObjectiveOutput
 
 from fitness import MyProblem, MyCallback
-from util.sEMGhelpers import load_datafile, LoadTrainTestFeatures, partition
+from util.sEMGhelpers import load_datafile, partition
 
 WANDB = os.getenv("WANDB", False)
 NAME  = os.getenv("NAME",  "Confounding-Mitigation-In-Deep-Learning")
