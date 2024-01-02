@@ -16,7 +16,7 @@ from pymoo.operators.sampling.rnd import FloatRandomSampling
 from pymoo.util.display.multi import MultiObjectiveOutput
 
 from fitness import MyProblem, MyCallback
-from util.sEMGhelpers import load_datafile, LoadTrainTestFeatures
+from util.sEMGhelpers import load_datafile, LoadTrainTestFeatures, partition
 
 WANDB = os.getenv("WANDB", False)
 NAME  = os.getenv("NAME",  "Confounding-Mitigation-In-Deep-Learning")
@@ -72,7 +72,9 @@ if __name__ == "__main__":
                         reinit   = True)
       wandb.log({"subject_info/vfi_1"  : int(VFI_1[sub_test][0][0])})
 
-    X, Y, C, X_Test, Y_Test = LoadTrainTestFeatures(FEAT_N, LABEL, SUBJECT_SKINFOLD, sub_test)
+    #X, Y, C, X_Test, Y_Test = LoadTrainTestFeatures(FEAT_N, LABEL, SUBJECT_SKINFOLD, sub_test)
+    X, Y, C, X_Test, Y_Test, C_test = partition(FEAT_N, LABEL, SUBJECT_SKINFOLD, sub_test)
+
 
     # Split training and validation (mainly for shuffle validation set technicially ot used here)
     X_Train, X_Valid, YC_Train, YC_Valid = train_test_split(X, np.transpose([Y, C]),
