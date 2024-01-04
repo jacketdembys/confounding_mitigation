@@ -31,7 +31,7 @@ spec:
             mv ../data .;
             pip install tsai;
             pip install ipykernel;
-            WANDB=1 GROUP=MLP-sEMG-1 python3 src/sEMG_MLP.py;
+            WANDB=1 GROUP=MLP-sEMG-0 python3 src/sEMG_MLP.py;
         resources:
           limits:
             memory: "8G"
