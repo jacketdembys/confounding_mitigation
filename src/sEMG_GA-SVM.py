@@ -19,7 +19,7 @@ from fitness import MyProblem, MyCallback
 from util.sEMGhelpers import load_datafile, partition
 
 WANDB = os.getenv("WANDB", False)
-NAME  = os.getenv("NAME",  "Confounding-Mitigation-In-Deep-Learning")
+NAME  = os.getenv("NAME",  "Confounding-Mitigation-In-Deep-Learning-2")
 GROUP = os.getenv("GROUP", "SVM-sEMG")
 
 if __name__ == "__main__":

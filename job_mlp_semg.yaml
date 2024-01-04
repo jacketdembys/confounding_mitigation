@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: exp-mlp-semg
+  name: exp-svm-semg-19
 spec:
   ttlSecondsAfterFinished: 100
   template:
@@ -10,38 +10,32 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: nvidia.com/gpu.product
-                operator: In
-                values:
-                - NVIDIA-GeForce-RTX-3090
+              - matchExpressions:
+                  - key: nvidia.com/gpu.product
+                    operator: In
+                    values:
+                      - NVIDIA-GeForce-RTX-3090
       volumes:
-      - name: dshm
-        emptyDir:
-          medium: Memory
-          sizeLimit: "1G"
-      containers:
-      - name: cpu-container
-        image: gitlab-registry.nrp-nautilus.io/yg5d6/cptdeeplearning:semg
-        command: ["/bin/bash", "-c"]
-        args:
-          - wandb login d7f81da19c5965b1c5eff37a677caab3ffb5379c;
-            git clone https://github.com/jacketdembys/confounding_mitigation.git;
-            cd confounding_mitigation;
-            mv ../data .;
-            pip install tsai;
-            pip install ipykernel;
-            WANDB=1 GROUP=MLP-sEMG-0 python3 src/sEMG_MLP.py;
-        resources:
-          limits:
-            memory: "8G"
-            cpu: "4"
-            nvidia.com/gpu: "1"
-          requests:
-            memory: "8G"
-            cpu: "4"
-            nvidia.com/gpu: "1"
-        volumeMounts:
         - name: dshm
-          mountPath: /dev/shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: "1G"
+      containers:
+        - name: cpu-container
+          image: gitlab-registry.nrp-nautilus.io/yg5d6/cptdeeplearning:semg
+          command: ["/bin/bash", "-c"]
+          args:
+            - wandb login d7f81da19c5965b1c5eff37a677caab3ffb5379c; git clone https://github.com/jacketdembys/confounding_mitigation.git; cd confounding_mitigation; mv ../data .; pip install tsai; pip install ipykernel; WANDB=1 GROUP=MLP-sEMG-0 python3 src/sEMG_MLP.py;
+          resources:
+            limits:
+              memory: "8G"
+              cpu: "4"
+              nvidia.com/gpu: "1"
+            requests:
+              memory: "8G"
+              cpu: "4"
+              nvidia.com/gpu: "1"
+          volumeMounts:
+            - name: dshm
+              mountPath: /dev/shm
       restartPolicy: Never
