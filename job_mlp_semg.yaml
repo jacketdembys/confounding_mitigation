@@ -26,7 +26,7 @@ spec:
         command: ["/bin/bash", "-c"]
         args:
           - wandb login d7f81da19c5965b1c5eff37a677caab3ffb5379c;
-            git clone https://github.com/g1y5x3/confounding_mitigation.git;
+            git clone https://github.com/jacketdembys/confounding_mitigation.git;
             cd confounding_mitigation;
             mv ../data .;
             pip install tsai;
